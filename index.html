@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ZipCast</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>ZipCast🌤️</h1>
+
+  <div>
+    <input type="text" id="zipInput" placeholder="Enter ZIP code" />
+    <button id="getWeatherBtn">Get Weather</button>
+  </div>
+
+  <!-- Unit toggle -->
+  <div id="unitToggle">
+    <span id="fahrenheit" class="active">°F</span>
+    <span class="divider">|</span>
+    <span id="celsius">°C</span>
+  </div>
+
+  <div id="weatherResult"></div>
+<div id="aqiSection" style="display:none;">
+  <h3>Air Quality Index</h3>
+  <div id="aqiBarContainer">
+    <div id="aqiBar"></div>
+  </div>
+  <p id="aqiText"></p>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
