@@ -1,140 +1,158 @@
-/* Ensure full height and no margin to show backgrounds */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  text-align: center;
-}
-
-/* Base body background fallback */
+/* === General Body & Container === */
 body {
-  background: linear-gradient(to bottom, #a0cfee, #e0f7fa);
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #a0cfee, #e0f7fa);
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  /* Smooth transition for background changes */
-  transition: background 0.5s ease;
+  padding: 20px;
 }
 
-/* Container with semi-transparent background so body background shows through */
 .container {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  padding: 40px 30px;
   max-width: 450px;
-  background: rgba(255, 255, 255, 0.85); /* semi-transparent */
-  margin: auto;
-  padding: 25px 30px;
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.7s ease forwards;
 }
 
-/* Inputs and buttons styling */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+/* === Input & Button === */
+.input-section {
+  margin-bottom: 25px;
+}
+
 input {
-  width: 70%;
-  padding: 10px;
+  width: 65%;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-right: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 button {
-  padding: 10px 20px;
-  margin-left: 10px;
+  padding: 12px 22px;
   font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 10px;
   border: none;
   background-color: #0288d1;
   color: white;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 button:hover {
   background-color: #0277bd;
+  transform: translateY(-2px);
 }
 
-#weatherResult {
-  margin-top: 30px;
-  font-size: 1.1rem;
-}
-
-/* === Unit Toggle Styles === */
+/* === Unit Toggle === */
 #unitToggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 18px;
-  color: gray;
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
+  display: inline-flex;
   justify-content: center;
+  margin-bottom: 25px;
+  user-select: none;
+  font-weight: 600;
 }
 
 #unitToggle span {
-  padding: 2px 6px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 4px 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 #unitToggle .divider {
   padding: 0 6px;
   color: gray;
-  user-select: none;
 }
 
 #unitToggle .active {
-  background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 6px;
   color: #222;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* === Weather Info === */
+#weatherResult {
+  margin-top: 20px;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+#weatherResult img {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 15px;
+}
+
+/* Temperature / Wind / Humidity */
+.weather-detail {
+  font-size: 1rem;
+  margin: 8px 0;
+}
+
+/* === AQI Circle === */
+.aqi-container {
+  margin-top: 25px;
+}
+
+.aqi-circle {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 10px auto;
+}
+
+.aqi-circle svg {
+  transform: rotate(-90deg);
+  width: 140px;
+  height: 140px;
+}
+
+.aqi-circle circle {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.5s ease;
+}
+
+.aqi-circle .bg {
+  stroke: rgba(0,0,0,0.1);
+}
+
+.aqi-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.aqi-label {
+  margin-top: 6px;
   font-weight: 600;
+  font-size: 1rem;
 }
 
-#aqiBarContainer {
-  width: 100%;
-  height: 20px;
-  background-color: #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 10px;
+/* === Fade-in Animation === */
+@keyframes fadeIn {
+  0% {opacity: 0; transform: translateY(10px);}
+  100% {opacity: 1; transform: translateY(0);}
 }
-
-#aqiBar {
-  height: 100%;
-  width: 0%;
-  background-color: green;
-  transition: width 0.5s ease, background-color 0.5s ease;
-}
-
-#aqiText {
-  margin-top: 5px;
-  font-weight: bold;
-}
-
-/* === Dynamic weather backgrounds === */
-
-body {
-  background-size: cover;
-  background-position: center;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  transition: background-image 0.5s ease-in-out;
-}
-
-body.clear-day {
-  background-image: url("images/clear-day.jpg");
-}
-
-body.clear-night {
-  background-image: url("images/clear-night.jpg");
-}
-
-body.cloudy-day {
-  background-image: url("images/cloudy-day.jpg");
-}
-
-body.cloudy-night {
-  background-image: url("images/cloudy-night.jpg");
-}
-
-/* You can add more weather conditions here */
