@@ -1,20 +1,20 @@
 /* === General Body & Container === */
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(135deg, #a0cfee, #e0f7fa);
-  color: #333;
+  color: #fff; /* Make text white for better contrast */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 20px;
+  transition: background 0.5s ease;
 }
 
 .container {
-  background: rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.35);
   backdrop-filter: blur(12px);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   padding: 40px 30px;
   max-width: 450px;
   width: 100%;
@@ -22,45 +22,47 @@ body {
   animation: fadeIn 0.7s ease forwards;
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
+/* Make headers pop */
+h1, h2 {
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* Weather details */
+.weather-detail {
+  font-size: 1rem;
+  margin: 8px 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* AQI */
+.aqi-label { text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+.aqi-number { text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+
+/* === Input Section === */
+.input-section {
+  position: relative;           /* needed so #citySuggestions positions under input */
+  display: flex;
+  justify-content: center;      /* center the input */
+  align-items: center;
+  gap: 0;                       /* no button anymore */
   margin-bottom: 25px;
+}
+
+.input-section input {
+  width: 100%;
+  max-width: 320px;             /* keep a nice centered width */
+  padding: 14px 18px;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.9);
   color: #222;
 }
 
-/* === Input & Button === */
-.input-section {
-  margin-bottom: 25px;
-}
-
-input {
-  width: 65%;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  margin-right: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-button {
-  padding: 12px 22px;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: none;
-  background-color: #0288d1;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-button:hover {
-  background-color: #0277bd;
-  transform: translateY(-2px);
-}
+/* (Removed the magnifying glass button styles) */
 
 /* === Unit Toggle === */
 #unitToggle {
@@ -70,18 +72,12 @@ button:hover {
   user-select: none;
   font-weight: 600;
 }
-
 #unitToggle span {
   padding: 4px 8px;
   transition: all 0.3s ease;
   cursor: pointer;
 }
-
-#unitToggle .divider {
-  padding: 0 6px;
-  color: gray;
-}
-
+#unitToggle .divider { padding: 0 6px; color: gray; }
 #unitToggle .active {
   background-color: rgba(0,0,0,0.1);
   border-radius: 6px;
@@ -94,7 +90,6 @@ button:hover {
   margin-top: 20px;
   animation: fadeIn 0.7s ease forwards;
 }
-
 #weatherResult img {
   width: 90px;
   height: 90px;
@@ -102,57 +97,78 @@ button:hover {
 }
 
 /* Temperature / Wind / Humidity */
-.weather-detail {
-  font-size: 1rem;
-  margin: 8px 0;
-}
+.weather-detail { font-size: 1rem; margin: 8px 0; }
 
 /* === AQI Circle === */
-.aqi-container {
-  margin-top: 25px;
-}
-
+.aqi-container { margin-top: 25px; }
 .aqi-circle {
   position: relative;
   width: 140px;
   height: 140px;
   margin: 0 auto 10px auto;
 }
-
 .aqi-circle svg {
   transform: rotate(-90deg);
-  width: 140px;
-  height: 140px;
+  width: 140px; height: 140px;
 }
-
 .aqi-circle circle {
   fill: none;
   stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dasharray 0.5s ease;
 }
-
-.aqi-circle .bg {
-  stroke: rgba(0,0,0,0.1);
-}
-
+.aqi-circle .bg { stroke: rgba(0,0,0,0.1); }
 .aqi-number {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.5rem; font-weight: 700;
 }
-
-.aqi-label {
-  margin-top: 6px;
-  font-weight: 600;
-  font-size: 1rem;
-}
+.aqi-label { margin-top: 6px; font-weight: 600; font-size: 1rem; }
 
 /* === Fade-in Animation === */
 @keyframes fadeIn {
   0% {opacity: 0; transform: translateY(10px);}
   100% {opacity: 1; transform: translateY(0);}
+}
+.weather-icon-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.weather-description {
+  text-transform: capitalize;
+  font-style: italic;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* === City Autocomplete Suggestions === */
+#citySuggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;                  /* matches the input-section width */
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  z-index: 999;
+  display: none;
+  padding: 0;
+  margin-top: 6px;
+}
+#citySuggestions div {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #222;
+  transition: background 0.2s ease;
+}
+#citySuggestions div:hover {
+  background-color: #e0e0e0;
+  border-radius: 8px;
 }
