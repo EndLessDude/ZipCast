@@ -29,10 +29,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const apiKey = "93be6e701b83661422a7b675b8ab01cd";
 
-  // Event listeners
+  // --- Backgrounds map ---
+  const backgrounds = {
+    clear_day: "images/clear-day.png",
+    clear_night: "images/clear-night.png",
+    clouds_day: "images/clouds-day.png",
+    clouds_night: "images/clouds-night.png",
+    rain_day: "images/rain-day.png",
+    rain_night: "images/rain-night.png",
+    snow_day: "images/snow-day.png",
+    snow_night: "images/snow-night.png",
+    thunderstorm_day: "images/thunderstorm-day.png",
+    thunderstorm_night: "images/thunderstorm-night.png",
+    default: "images/default.png"
+  };
+
+  function setBackground(main, isNight) {
+    let key = "default";
+    if (main.includes("clear")) key = isNight ? "clear_night" : "clear_day";
+    else if (main.includes("cloud")) key = isNight ? "clouds_night" : "clouds_day";
+    else if (main.includes("rain")) key = isNight ? "rain_night" : "rain_day";
+    else if (main.includes("snow")) key = isNight ? "snow_night" : "snow_day";
+    else if (main.includes("thunderstorm")) key = isNight ? "thunderstorm_night" : "thunderstorm_day";
+
+    const bgPath = backgrounds[key] || backgrounds.default;
+    console.log("Setting background:", bgPath); // debug
+
+    document.body.style.background = `url('${bgPath}') no-repeat center center fixed`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.transition = "background 0.5s ease";
+  }
+
+  // --- Event listeners ---
   cityInput.addEventListener('input', fetchCitySuggestions);
 
-  // NEW: fetch when pressing Enter (since button is removed)
   cityInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       const q = cityInput.value.trim();
@@ -79,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
           suggestionsDiv.style.display = 'block';
         })
         .catch(err => console.error('Error fetching city suggestions:', err));
-    }, 300); // slight debounce
+    }, 300);
   }
 
   // --- Fetch weather by coordinates ---
@@ -102,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 
-  // --- Fetch weather by city name (fallback if no suggestion clicked) ---
+  // --- Fetch weather by city name ---
   function fetchWeatherByCity(cityName) {
     const url = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(cityName)}&limit=1&appid=${apiKey}`;
     fetch(url)
@@ -206,16 +236,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const hour = now.getHours();
     const isNight = hour >= 19 || hour < 6;
     const main = data.weather[0].main.toLowerCase();
-    let bgImage = 'clear-day';
-    if (main.includes('clear')) bgImage = isNight ? 'clear-night' : 'clear-day';
-    else if (main.includes('cloud')) bgImage = isNight ? 'clouds-night' : 'clouds-day';
-    else if (main.includes('rain')) bgImage = isNight ? 'rain-night' : 'rain-day';
-    else if (main.includes('snow')) bgImage = isNight ? 'snow-night' : 'snow-day';
-    else if (main.includes('thunderstorm')) bgImage = isNight ? 'thunderstorm-night' : 'thunderstorm-day';
 
-    document.body.style.background = `url('images/${bgImage}.png') no-repeat center center fixed`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.transition = 'background 0.5s ease';
+    // Set background using centralized function
+    setBackground(main, isNight);
 
     let html = `
       <h2>${displayName || data.name}</h2>
