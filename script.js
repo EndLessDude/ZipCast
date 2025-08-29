@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Backgrounds map ---
   const backgrounds = {
+    homepage: "images/homepage.png",
     clear_day: "images/clear-day.png",
     clear_night: "images/clear-night.png",
     clouds_day: "images/clouds-day.png",
@@ -41,8 +42,15 @@ document.addEventListener("DOMContentLoaded", () => {
     snow_night: "images/snow-night.png",
     thunderstorm_day: "images/thunderstorm-day.png",
     thunderstorm_night: "images/thunderstorm-night.png",
+    mist_day: "images/mist-day.png",
+    mist_night: "images/mist-night.png",
     default: "images/default.png"
   };
+
+  // --- Set initial homepage background ---
+  document.body.style.transition = "background 0.5s ease";
+  document.body.style.background = `url('${backgrounds.homepage}') no-repeat center center fixed`;
+  document.body.style.backgroundSize = "cover";
 
   function setBackground(main, isNight) {
     let key = "default";
@@ -51,13 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
     else if (main.includes("rain")) key = isNight ? "rain_night" : "rain_day";
     else if (main.includes("snow")) key = isNight ? "snow_night" : "snow_day";
     else if (main.includes("thunderstorm")) key = isNight ? "thunderstorm_night" : "thunderstorm_day";
+    else if (main.includes("mist")) key = isNight ? "mist_night" : "mist_day";
 
     const bgPath = backgrounds[key] || backgrounds.default;
     console.log("Setting background:", bgPath); // debug
-
     document.body.style.background = `url('${bgPath}') no-repeat center center fixed`;
     document.body.style.backgroundSize = "cover";
-    document.body.style.transition = "background 0.5s ease";
   }
 
   // --- Event listeners ---
