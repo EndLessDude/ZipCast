@@ -172,3 +172,16 @@ h1, h2 {
   background-color: #e0e0e0;
   border-radius: 8px;
 }
+/* === credits === */
+#credits {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #666;
+  font-family: sans-serif;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 4px 8px;
+  border-radius: 4px;
+  z-index: 1000;
+}
