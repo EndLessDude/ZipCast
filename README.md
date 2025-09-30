@@ -1,1 +1,1 @@
-A work out trainer App
+My first project! A weather app!
